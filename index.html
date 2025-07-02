@@ -1,18 +1,77 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Beauty Bliss</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <style>
-    .logo img {
-      height: 60px;
+    .grid-productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      padding: 1rem;
     }
-    .icons a {
-      font-size: 1.6rem;
-      margin: 0 0.5rem;
+
+    .producto {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      text-align: center;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .producto:hover {
+      transform: scale(1.03);
+    }
+
+    .producto img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin-bottom: 0.5rem;
+    }
+
+    .producto button {
+      margin-top: 0.5rem;
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .producto button:hover {
+      background-color: #c2185b;
+    }
+
+    .categorias {
+      display: flex;
+      justify-content: space-around;
+      padding: 1rem;
+    }
+
+    .categoria {
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .categoria img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+    }
+
+    .categoria p {
+      margin-top: 0.5rem;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -21,51 +80,106 @@
     <div class="logo">
       <img src="logo.png" alt="Beauty Bliss Logo">
     </div>
-    <input type="text" id="search-bar" placeholder="Buscar productos...">
-    <div class="icons">
-      <a href="login.html" title="Usuario">👤</a>
-      <a href="#" title="Favoritos">❤️</a>
-      <a href="cart.html" title="Carrito">🛒</a>
-      <a href="contacto.html" title="Contacto">📞</a>
-    </div>
+    <nav class="nav-links">
+      <a href="#">Inicio</a>
+      <a href="Sobre-nosotros.html">Sobre nosotros</a>
+      <a href="maquillaje.html">Maquillaje</a>
+      <a href="cuidado de la piel.html">Cuidado de la piel</a>
+      <a href="fragancias.html">Fragancias</a>
+      <a href="ofertas.html">Ofertas</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
   </header>
 
-  <nav class="categorias">
-    <button>Ojos</button>
-    <button>Rostro</button>
-    <button>Cuidado del Cabello</button>
-    <button>Cuidado Facial</button>
-    <button>Uñas</button>
-  </nav>
+  <div class="cart-icon" onclick="toggleCart()">
+    🛒<span id="cart-count">0</span>
+  </div>
+
+  <div id="carrito" class="oculto">
+    <h3>Carrito</h3>
+    <ul id="carrito-lista"></ul>
+    <p>Total: $<span id="total">0.00</span></p>
+    <button id="cerrar-carrito">Cerrar</button>
+  </div>
 
   <main>
     <section class="destacados">
+      <h2>Descubre</h2>
+      <h1>Nuestros Exóticos Productos de Belleza</h1>
+      <button class="comprar-btn">Comprar ahora</button>
+
+      <div class="categorias">
+        <a class="categoria" href="cuidado de la piel.html">
+          <img src="skincare.png" alt="Skincare">
+          <p>Cuidado de la Piel</p>
+        </a>
+        <a class="categoria" href="maquillaje.html">
+          <img src="maquillaje.png" alt="Maquillaje">
+          <p>Maquillaje</p>
+        </a>
+        <a class="categoria" href="cabello.html">
+          <img src="cabello.png" alt="Cabello">
+          <p>Cuidado del Cabello</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="destacados">
       <h2>Productos Destacados</h2>
-      <div class="productos">
-        <div class="producto ojos">
-          <img src="labial.png" alt="Labial">
-          <h3>Labial Rosa</h3>
-          <p>$120</p>
-          <button onclick="agregarAlCarrito('Labial Rosa', 120)">Agregar al carrito</button>
+      <div class="grid-productos">
+        <div class="producto" data-nombre="Lipstick" data-precio="18">
+          <img src="labial.png" alt="Lipstick">
+          <p>Lipstick - $18.00</p>
+          <button>Agregar al carrito</button>
         </div>
-        <div class="producto rostro">
-          <img src="crema hidratante.png" alt="Crema">
-          <h3>Crema Hidratante</h3>
-          <p>$180</p>
-          <button onclick="agregarAlCarrito('Crema Hidratante', 180)">Agregar al carrito</button>
+        <div class="producto" data-nombre="Colonia" data-precio="23">
+          <img src="colonia.png" alt="Colonia">
+          <p>Colonia - $23.00</p>
+          <button>Agregar al carrito</button>
         </div>
-        <div class="producto uñas">
+        <div class="producto" data-nombre="Crema Hidratante" data-precio="11">
+          <img src="crema hidratante.png" alt="Crema Humectante">
+          <p>Crema Hidratante - $11.00</p>
+          <button>Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="Esmalte" data-precio="5">
           <img src="esmalte.png" alt="Esmalte">
-          <h3>Esmalte Coral</h3>
-          <p>$90</p>
-          <button onclick="agregarAlCarrito('Esmalte Coral', 90)">Agregar al carrito</button>
+          <p>Esmalte - $5.00</p>
+          <button>Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="Tónico Facial" data-precio="12">
+          <img src="tonico.png" alt="Tónico">
+          <p>Tónico Facial - $12.00</p>
+          <button>Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="Perfume Rosas" data-precio="30">
+          <img src="rosas.png" alt="Perfume">
+          <p>Perfume Rosas - $30.00</p>
+          <button>Agregar al carrito</button>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Beauty Bliss. Todos los derechos reservados.</p>
+  <footer class="footer">
+    <div class="footer-section">
+      <h4>Sobre Beauty Bliss</h4>
+      <p>Salud y Cuidado</p>
+      <p>Sustentabilidad</p>
+      <p>Nuestro Compromiso</p>
+    </div>
+    <div class="footer-section">
+      <h4>AYUDA</h4>
+      <p>Encuentra Beauty Bliss</p>
+      <p>Ayuda y Contacto</p>
+      <p>Libro de Reclamaciones</p>
+    </div>
+    <div class="footer-section">
+      <h4>SOPORTE</h4>
+      <p>Términos y Condiciones</p>
+      <p>Políticas de Cookies</p>
+      <p>Políticas de Privacidad</p>
+    </div>
   </footer>
 
   <script src="script.js"></script>
